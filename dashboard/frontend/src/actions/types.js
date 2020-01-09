@@ -1,0 +1,52 @@
+//records types
+export const RECORDS_GET = "RECORDS_GET"
+export const RECORDS_DELETE = "RECORDS_DELETE"
+export const RECORDS_UPDATE = "RECORDS_UPDATE"
+export const RECORDS_NEW = "RECORDS_NEW"
+
+//chart types
+export const CHART_GET_DATA = "CHART_GET_DATA"
+export const CHART_CLEAR = "CHART_CLEAR"
+export const CHART_UPDATE = "CHART_UPDATE"
+
+//PROGRESS types
+export const PROGRESS_GET_DATA = "PROGRESS_GET_DATA"
+export const PROGRESS_CLEAR = "PROGRESS_CLEAR"
+export const PROGRESS_UPDATE_STATUS = "PROGRESS_UPDATE_STATUS"
+export const PROGRESS_UPDATE_PROGRESS = "PROGRESS_UPDATE_PROGRESS"
+export const PROGRESS_UPDATE_VOLUME = "PROGRESS_UPDATE_VOLUME"
+
+//user types
+export const USER_LOADING = "USER_LOADING"
+export const USER_LOADED = "USER_LOADED"
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+export const LOGIN_FAIL = "LOGIN_FAIL"
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS"
+export const REGISTER_FAIL = "REGISTER_FAIL"
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS"
+
+//auth types
+export const AUTH_ERROR = "AUTH_ERROR"
+
+
+//mqtt client types
+export const CLIENT_CONNECT_SUCCESS = "CLIENT_CONNECT_SUCCESS"
+export const CLIENT_CONNECT_FAIL = "CLIENT_CONNECT_FAIL"
+export const PUBLISH_SUCCESS = "PUBLISH_SUCCESS"
+export const PUBLISH_FAIL = "PUBLISH_FAIL"
+export const SUBSCRIBE_SUCCESS = "SUBSCRIBE_SUCCESS"
+export const SUBSCRIBE_FAIL = "SUBSCRIBE_FAIL"
+
+
+//mqtt payload types
+export const RECEIVED_DISTILLATION_DATA = "RECEIVED_DISTILLATION_DATA"
+export const RECEIVED_PROGRESS_DATA = "RECEIVED_PROGRESS_DATA"
+
+//sap specs types
+export const SAP_GET_DATA = "SAP_GET_DATA"
+export const SAP_CLEAR = "SAP_CLEAR"
+
+
+//misc types
+export const GET_ERRORS = "GET_ERRORS"
+export const CREATE_MESSAGE = "CREATE_MESSAGE"
