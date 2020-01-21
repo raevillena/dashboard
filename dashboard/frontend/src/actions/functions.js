@@ -7,57 +7,66 @@ import {
     RECORDS_DELETE,
     CHART_UPDATE,
     CHART_GET_DATA,
-    RECORDS_UPDATE,
+    RECORDS_START,
+    RECORDS_END,
+    RECORDS_ERROR,
+    ONGOING_GET,
+    ONGOING_ADD,
+    ONGOING_DELETE
 } from './types'
 import { tokenConfig } from './auth'
 
-/*
-//get leads
-export const getLeads = () => (dispatch, getState) => {
+
+//set start flag for a record
+export const setStart = (id, status) => (dispatch, getState) => {
+    const start = Date.now()
+    const body = JSON.stringify({ start, status })
     axios
-        .get('/api/leads/', tokenConfig(getState))
+        .put(`/api/records/${id}/`, body, tokenConfig(getState))
         .then(res => {
             dispatch({
-                type: GET_LEADS,
+                type: ONGOING_ADD,
                 payload: res.data
-            });
+            })
+            dispatch(createMessage({ recordsInfo: 'Recording started' }))
+            dispatch({
+                type: RECORDS_START,
+                payload: { id, start, status }
+            })
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status))
+            dispatch({
+                type: RECORDS_ERROR
+            })
         })
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
-
-
-//delete leads
-export const deleteLead = (id) => (dispatch, getState) => {
+//set start flag for a record
+export const setEnd = (id, start, status) => (dispatch, getState) => {
+    const end = Date.now()
+    const duration = end - parseInt(start)
+    const body = JSON.stringify({ duration, end, status })
     axios
-        .delete(`/api/leads/${id}/`, tokenConfig(getState))
+        .put(`/api/records/${id}/`, body, tokenConfig(getState))
         .then(res => {
-            dispatch(createMessage({ deleteLead: 'Lead Deleted' }))
+            dispatch(createMessage({ addLead: 'Recording Finished' }))
             dispatch({
-                type: DELETE_LEAD,
+                type: ONGOING_DELETE,
                 payload: id
-            });
-        })
-        .catch(err => console.log(err))
-}
-
-
-
-//add lead
-export const addLead = (lead) => (dispatch, getState) => {
-    axios
-        .post('/api/leads/', lead, tokenConfig(getState))
-        .then(res => {
-            dispatch(createMessage({ addLead: 'Lead Added' }))
+            })
             dispatch({
-                type: ADD_LEAD,
-                payload: res.data
-            });
+                type: RECORDS_END,
+                payload: { id, duration, end, status }
+            })
+            
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status))
+            dispatch({
+                type: RECORDS_ERROR
+            })
         })
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
-*/
 //get stores
 export const getStores = () => (dispatch, getState) => {
     axios
@@ -65,6 +74,19 @@ export const getStores = () => (dispatch, getState) => {
         .then(res => {
             dispatch({
                 type: RECORDS_GET,
+                payload: res.data
+            });
+        })
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
+}
+
+//get active distillation
+export const getOngoing = () => (dispatch, getState) => {
+    axios
+        .get('/api/records/?status=Active', tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: ONGOING_GET,
                 payload: res.data
             });
         })
@@ -87,7 +109,6 @@ export const deleteStore = (id) => (dispatch, getState) => {
 
 //add store
 export const addStore = (store) => (dispatch, getState) => {
-    console.log(store)
     axios
         .post('/api/records/', store, tokenConfig(getState))
         .then(res => {
@@ -102,7 +123,6 @@ export const addStore = (store) => (dispatch, getState) => {
 
 //add store in array form one request
 export const addStoreData = (store) => (dispatch, getState) => {
-    console.log(store)
     axios
         .post('/api/records/', store, tokenConfig(getState))
         .then(res => {

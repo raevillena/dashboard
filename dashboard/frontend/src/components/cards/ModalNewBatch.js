@@ -22,7 +22,7 @@ const styles = {
     },
 };
 
-function SModalFunc(props) {
+function ModalNewBatch(props) {
     const { classes } = props;
     const [open, setOpen] = React.useState(false);
 
@@ -62,7 +62,7 @@ function SModalFunc(props) {
     )
 }
 
-SModalFunc.propTypes = {
+ModalNewBatch.propTypes = {
     classes: PropTypes.object.isRequired
 }
-export default withStyles(styles)(SModalFunc)
+export default withStyles(styles)(ModalNewBatch)

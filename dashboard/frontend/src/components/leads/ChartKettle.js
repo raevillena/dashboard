@@ -22,12 +22,10 @@ export class ChartKettle extends Component {
     };
 
     componentDidMount() {
-        console.log('Kettle Chart did mount')
         this.props.getKettleData(this.state.messageID)
     }
     componentWillUnmount() {
         chartData = []
-        console.log('Kettle chart unmounted')
     }
 
     render() {

@@ -26,6 +26,7 @@ export class Alerts extends Component {
             if (message.sendMqttError) alert.error(message.sendMqttError)
             if (message.clientMqttError) alert.error(message.clientMqttError)
             if (message.clientMqttSuccess) alert.success(message.clientMqttSuccess)
+            if (message.recordsInfo) alert.info(message.recordsInfo)
         }
     }
     render() {

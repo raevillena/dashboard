@@ -27,14 +27,12 @@ export class ChartCondenser extends Component {
     };
 
     componentDidMount() {
-        console.log('Condenser Chart did mount')
         this.props.getCondenserData(1)
     }
     componentWillUnmount() {
         timeData = []
         chartData = []
         chartData2 = []
-        console.log('Condenser Chart Unmounted')
     }
 
     render() {
@@ -44,7 +42,6 @@ export class ChartCondenser extends Component {
             chartData2 = this.props.kettleData
             div = parseInt(chartData.length / 4)
         }
-        //{console.log(this.props.condenserData)}
 
         var data = {
             labels: timeData,

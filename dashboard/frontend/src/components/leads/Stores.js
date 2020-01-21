@@ -1,13 +1,36 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { getStores, deleteStore } from '../../actions/functions'
+import { getStores, deleteStore, setStart, setEnd } from '../../actions/functions'
 
 export class Stores extends Component {
   static propTypes = {
     records: PropTypes.array.isRequired,
     getStores: PropTypes.func.isRequired,
-    deleteStore: PropTypes.func.isRequired
+    deleteStore: PropTypes.func.isRequired,
+    setStart: PropTypes.func.isRequired,
+    setEnd: PropTypes.func.isRequired
+  }
+
+  computeduration = (microsec) => {
+    if (microsec) {
+      const min = parseInt(microsec) / 60000
+      if (Math.floor(min) < 60) {
+        return `${Math.floor(min)}mins`
+      } else {
+        return `${Math.floor(min / 60)}Hrs ${Math.floor(min % 60)}mins`
+      }
+    } else {
+      return '0mins'
+    }
+  }
+
+  handledate = (timestamp) => {
+    if (timestamp) {
+      return new Date(parseInt(timestamp)).toLocaleTimeString("en-US")
+    } else {
+      return '0mins'
+    }
   }
 
   componentDidMount() {
@@ -21,12 +44,14 @@ export class Stores extends Component {
           <table className="table table-stripped m-auto">
             <thead className="thead-light">
               <tr>
-                <th>Batch ID</th>
+                <th>Record ID</th>
                 <th>Start</th>
                 <th>Duration</th>
                 <th>End</th>
                 <th>Ethanol Volume</th>
                 <th>Status</th>
+                <th />
+                <th />
                 <th />
               </tr>
             </thead>
@@ -34,12 +59,14 @@ export class Stores extends Component {
               {this.props.records.map(record => (
                 <tr key={record.recordID}>
                   <td>{record.recordID}</td>
-                  <td>{record.start}</td>
-                  <td>{record.duration}</td>
-                  <td>{record.end}</td>
+                  <td>{this.handledate(record.start)}</td>
+                  <td>{this.computeduration(record.duration)}</td>
+                  <td>{this.handledate(record.end)}</td>
                   <td>{record.output_volume}</td>
                   <td>{record.status}</td>
                   <td> <button onClick={this.props.deleteStore.bind(this, record.recordID)} className="btn btn-danger btn-sm"> Delete</button></td>
+                  <td> <button onClick={this.props.setStart.bind(this, record.recordID, 'Active')} className="btn btn-success btn-sm" disabled={record.status === 'Active' || record.status === 'Finished'}> Start</button></td>
+                  <td> <button onClick={this.props.setEnd.bind(this, record.recordID, record.start, 'Finished')} className="btn btn-success btn-sm" disabled={record.status === 'Finished' || record.status === ''}> End</button></td>
                 </tr>
               ))}
             </tbody>
@@ -55,4 +82,4 @@ const mapStateToProps = state => ({
   records: state.records.records
 })
 
-export default connect(mapStateToProps, { getStores, deleteStore })(Stores)
+export default connect(mapStateToProps, { getStores, deleteStore, setStart, setEnd })(Stores)

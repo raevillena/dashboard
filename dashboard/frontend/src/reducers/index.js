@@ -6,6 +6,8 @@ import records from './records'
 import payload from './payload'
 import client from './client'
 import sap from './sap'
+import ongoing from './ongoing'
+import relay from './relay'
 
 export default combineReducers({
     client,
@@ -14,5 +16,7 @@ export default combineReducers({
     messages,
     auth,
     payload,
-    sap
+    sap,
+    ongoing,
+    relay
 });

@@ -29,8 +29,8 @@ export default function (state = initialState, action) {
                 if (state.condenserData.length >= arr_length) {
                     return {
                         ...state,
-                        condenser: data[0],
-                        kettle: data[1],
+                        condenser: parseFloat(data[0].toFixed(2)),
+                        kettle: parseFloat(data[1].toFixed(2)),
                         heater: data[2],
                         pump: data[3],
                         condenserData: [...state.condenserData, data[0]].splice(1, arr_length),
@@ -43,8 +43,8 @@ export default function (state = initialState, action) {
                 else {
                     return {
                         ...state,
-                        condenser: data[0],
-                        kettle: data[1],
+                        condenser: data[0].toFixed(2),
+                        kettle: data[1].toFixed(2),
                         heater: data[2],
                         pump: data[3],
                         condenserData: [...state.condenserData, data[0]],

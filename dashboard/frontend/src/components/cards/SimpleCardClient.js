@@ -27,9 +27,6 @@ const styles = {
 
 export class SimpleCardClient extends Component {
 
-    componentDidMount() {
-        console.log('Client did mount')
-    }
     render() {
         const { classes } = this.props;
         const clientConnected = (

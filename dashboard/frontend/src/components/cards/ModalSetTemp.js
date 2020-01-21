@@ -5,16 +5,21 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
-import SimpleCardSapOverview from './SimpleCardSapOverview';
+import SimpleCardSwitches from './SimpleCardSwitches';
+
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
     modal: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+
     },
     paper: {
-        width: '30%',
+        minWidth: 300,
+        maxWidth: 500,
         backgroundColor: 'white',
         //border: '2px solid #000',
         boxShadow: '3px 4px 16px -8px rgba(0,0,0,0.75)',
@@ -22,7 +27,8 @@ const styles = {
     },
 };
 
-function ModalViewSap(props) {
+function ModalSetTemp(props) {
+
     const { classes } = props;
     const [open, setOpen] = React.useState(false);
 
@@ -37,7 +43,7 @@ function ModalViewSap(props) {
     return (
         <div>
             <Button type="button" variant="outlined" color="primary" onClick={handleOpen}>
-                View Sap Specifications
+                Switches
             </Button>
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -53,7 +59,7 @@ function ModalViewSap(props) {
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
-                        <SimpleCardSapOverview />
+                        <SimpleCardSwitches />
                     </div>
                 </Fade>
             </Modal>
@@ -61,7 +67,17 @@ function ModalViewSap(props) {
     )
 }
 
-ModalViewSap.propTypes = {
+ModalSetTemp.propTypes = {
     classes: PropTypes.object.isRequired
 }
-export default withStyles(styles)(ModalViewSap)
+export default withStyles(styles)(ModalSetTemp)
+
+/*
+<div className={classes.paper}>
+<Grid container spacing={3}>
+                            <Grid item xs={6}>
+                                <Paper className={classex.paper}><SimpleCardSwitches /></Paper>
+                            </Grid>
+</Grid>
+</div>
+*/

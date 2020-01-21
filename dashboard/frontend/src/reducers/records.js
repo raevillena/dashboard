@@ -2,6 +2,8 @@ import {
     RECORDS_NEW,
     RECORDS_GET,
     RECORDS_UPDATE,
+    RECORDS_START,
+    RECORDS_END,
     RECORDS_DELETE,
     PROGRESS_CLEAR,
     PROGRESS_GET_DATA,
@@ -17,7 +19,7 @@ const initialState = {
     progress: 0,
     volume: 0
 }
-
+let buffer
 export default function (state = initialState, action) {
     switch (action.type) {
         case RECORDS_GET:
@@ -28,12 +30,24 @@ export default function (state = initialState, action) {
         case RECORDS_DELETE:
             return {
                 ...state,
-                records: state.records.filter(record => record.RecordID !== action.payload)
+                records: state.records.filter(record => record.recordID !== action.payload)
             }
         case RECORDS_NEW:
             return {
                 ...state,
                 records: [...state.records, action.payload]
+            }
+        case RECORDS_START:
+            Object.assign(state.records.find(({ recordID }) => recordID === action.payload.id), { start: action.payload.start, status: action.payload.status })
+            return {
+                ...state,
+                records: [...state.records]
+            }
+        case RECORDS_END:
+            Object.assign(state.records.find(({ recordID }) => recordID === action.payload.id), { duration: action.payload.duration, end: action.payload.end, status: action.payload.status })
+            return {
+                ...state,
+                records: [...state.records]
             }
         case PROGRESS_CLEAR:
             return {

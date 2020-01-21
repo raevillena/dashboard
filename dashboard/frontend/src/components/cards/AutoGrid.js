@@ -20,7 +20,7 @@ import GaugeMeterPump from '../leads/GaugeMeterPump'
 
 import { color1 } from '../constants/colors'
 
-import SModalFunc from './SModalFunc'
+import ModalSetTemp from './ModalSetTemp'
 
 const theme = createMuiTheme({
     typography: {
@@ -83,13 +83,14 @@ function AutoGrid(props) {
                         </Grid>
                     </Grid>
                     <Grid item lg md sm={12} xs={12}>
-                        <Grid container spacing={10}>
+                        <Grid container spacing={1}>
                             <Grid item lg md sm={12} xs={12}>
                                 <Paper className={classes.paper}>
                                     <Typography gutterBottom variant="h5" component="h2" color="secondary">
                                         <BarChartIcon />Temperature Profile
                                     </Typography>
                                     <ChartCondenser />
+                                    <ModalSetTemp />
                                 </Paper>
                             </Grid>
                         </Grid>
