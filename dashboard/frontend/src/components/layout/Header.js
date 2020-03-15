@@ -14,9 +14,12 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 //import component for account logout
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { grey } from '@material-ui/core/colors';
 
 import { appbarColor } from '../constants/colors'
 
@@ -52,6 +55,16 @@ export class Header extends Component {
     classes: Proptypes.object.isRequired
   }
 
+  state = {
+    anchorEl: undefined,
+  }
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: undefined });
+  };
 
   render() {
 
@@ -59,14 +72,32 @@ export class Header extends Component {
     const { classes } = this.props
 
     const authLinks = (
+      <div>
+        <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
+          <AccountCircleIcon fontSize="large" style={{ color: grey[50] }} />
+        </IconButton>
+        <Menu
+          id="simple-menu"
+          anchorEl={this.state.anchorEl}
+          keepMounted
+          open={Boolean(this.state.anchorEl)}
+          onClose={this.handleClose}
+        >
+          <div className="d-flex justify-content-center">
+            <h6 className="text-muted font-weight-bol">{user ? user.username : ''}</h6>
+          </div>
+          <MenuItem onClick={this.props.logout}>Logout</MenuItem>
+        </Menu>
+      </div>
+      /*
       <div className="dropdown">
         <button className="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {user ? `${user.username}` : ''}
+          {user ? user.username : ''}
         </button>
         <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-          <button className="dropdown-item" type="button" onClick={this.props.logout}>Logout</button>
+          <button className="dropdown-item" type="button" onClick={this.props.logout}>Logout {user ? user.username : ''}</button>
         </div>
-      </div>
+      </div> */
     )
     const registerLink = React.forwardRef((props, ref) => <NavLink to="/register" {...props} ref={ref} />);
     const loginLink = React.forwardRef((props, ref) => <NavLink to="/login" {...props} ref={ref} />);
@@ -90,7 +121,7 @@ export class Header extends Component {
                         <MenuIcon />
                       </IconButton>
                       <Typography variant="h6" color="inherit" className={classes.flex}>
-                        Zero Fossil Fuel Distiller
+                        MMSU e-Distiller Manager
                       </Typography>
                       {isAuthenticated ? authLinks : guestLinks}
                     </Toolbar>

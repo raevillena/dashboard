@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { getOngoing } from "../../actions/functions";
 import { Redirect } from 'react-router-dom'
 import AutoGrid from '../cards/AutoGrid';
+import DashboardGrid from '../cards/DashboardGrid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { createMessage } from '../../actions/messages'
 import { CREATE_MESSAGE } from '../../actions/types'
@@ -28,7 +29,7 @@ export class Dashboard extends Component {
     else if (rec[0] === "noActive") {
       return (
         <Fragment>
-          <div style={{ paddingTop: '10px', margin: '0' }}>
+          <div className="d-flex justify-content-center align-middle" style={{ paddingTop: '10px', margin: '0' }}>
             <CircularProgress />
           </div>
         </Fragment>
@@ -37,7 +38,7 @@ export class Dashboard extends Component {
       return (
         <Fragment>
           <div style={{ paddingTop: '10px', margin: '0' }}>
-            <AutoGrid />
+            <DashboardGrid />
           </div>
         </Fragment>
       )

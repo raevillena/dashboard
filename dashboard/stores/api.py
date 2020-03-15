@@ -1,6 +1,6 @@
 from stores.models import Record, RecordData
 from rest_framework import viewsets, permissions
-from .serializers import RecordSerializer, RecordDataSerializer, SapSpecsSerializer, RecordBufferSerializer
+from .serializers import RecordSerializer, RecordDataSerializer, DistillerRecordSerializer
 
 
 #Record Viewset
@@ -53,28 +53,14 @@ class RecordDataViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-
-#Sap specs Viewset
-class SapSpecsViewSet(viewsets.ModelViewSet):
+#Distillers Viewset
+class DistillersViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
-    serializer_class = SapSpecsSerializer
+    serializer_class = DistillerRecordSerializer
 
     def get_queryset(self):
-        return self.request.user.sapspecs.all()
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
-
-#Record buffer Viewset
-class RecordBufferViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
-
-    serializer_class = RecordBufferSerializer
-
-    def get_queryset(self):
-        return self.request.user.recordbuffer.all()
+        return self.request.user.distillers.all()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

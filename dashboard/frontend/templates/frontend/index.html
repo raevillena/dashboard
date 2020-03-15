@@ -6,81 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://bootswatch.com/4/lumen/bootstrap.min.css">
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
 	<style>
 		body {
 		  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 		}
-		.ct-series-a .ct-line {
-		  stroke: green;
-		  stroke-width: 1px;
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
 		}
-		.ct-series-b .ct-line {
-		  stroke: #c1682c;
-		  stroke-width: 1px;
-		}
-		.ct-series-c .ct-line {
-		  stroke: #058cc6;
-		  stroke-width: 1px;
-		}
-		.ct-legend {
-			position: relative;
-			text-align: center;
-			z-index: 10;
-			padding-left:0px;
-		}
-		.ct-legend li {
-			display:inline;
-			text-align: center;
-			position: relative;
-			padding-left: 23px;
-			list-style-type:none
-		}
-		
-		.ct-legend li:before {
-			width: 15px;
-			height: 15px;
-			position: absolute;
-			left: 0;
-			content: '';
-			border: 3px solid transparent;
-			border-radius: 2px;
-		}
-		.ct-legend.ct-legend-inside {
-			position: absolute;
-			top: 0;
-			right: 0;
-		}
-		
-		.ct-series-1 {
-			margin-left: 20px;
-		}
-		.ct-series-2 {
-			margin-left: 20px;
-		}
-		
-		.ct-series-0:before {
-			background-color: green;
-			border-color: green;
-			margin-top: 3px;
-		}
-		.ct-series-1:before {
-			background-color: #c1682c;
-			border-color: #c1682c;
-			margin-top: 3px;
-		}
-		.ct-series-2:before {
-			background-color: #058cc6;
-			border-color: #058cc6;
-			margin-top: 3px;
-		}
-		
-		.ct-label.ct-horizontal.ct-end {
-			display: block;
-			text-align: center;
-		}
-		
-
 	</style>
 	{% load static %}
 	<link rel="shortcut icon" type="image/x-icon" href="{% static 'frontend/favicon.ico' %}"/>
@@ -97,7 +31,6 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
-	<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 </body>
 
 </html>

@@ -9,6 +9,7 @@ import AlertTemplate from "react-alert-template-basic"
 import Header from './layout/Header';
 import Dashboard from './leads/Dashboard';
 import Records from './leads/Records';
+import Distillers from './leads/Distillers';
 import Alerts from './layout/Alerts';
 import Client from './layout/Client'
 
@@ -19,8 +20,6 @@ import PrivateRoute from './common/PrivateRoute';
 import { Provider } from 'react-redux';
 import store from '../store';
 import { loadUser } from '../actions/auth'
-
-
 
 //Alert options
 const alertOptions = {
@@ -46,6 +45,7 @@ class App extends Component {
                                 <Switch>
                                     <PrivateRoute exact path="/" component={Dashboard} />
                                     <PrivateRoute exact path="/records" component={Records} />
+                                    <PrivateRoute exact path="/distillers" component={Distillers} />
                                     <Route exact path="/register" component={Register} />
                                     <Route exact path="/login" component={Login} />
                                 </Switch>

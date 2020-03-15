@@ -6,18 +6,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import PropTypes from 'prop-types'
 import Switch from '@material-ui/core/Switch';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { sendSwitches } from '../../actions/payload'
 import { createMessage } from '../../actions/messages'
 import { connect } from 'react-redux'
 import {
     RELAY1TT, RELAY2TT, RELAY3TT, RELAY4TT, RELAY5TT, RELAY6TT
 } from '../constants/topics'
-import {
-    RELAY1, RELAY2, RELAY3, RELAY4, RELAY5, RELAY6
-} from '../../actions/types'
-
 const IOSSwitch = withStyles(theme => ({
     root: {
         width: 42,

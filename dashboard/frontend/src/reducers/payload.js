@@ -14,15 +14,21 @@ const initialState = {
     timeData: [],
     heater: 0.00,
     pump: 0.00,
-    condenser: 0.00,
-    kettle: 0.00
+    condenser: "0.00",
+    kettle: "0.00"
 }
 let data, timestamp, last
 let arr_length = 200
+let count_arr = []
+for (var i = 0; i <= 199; i++) {
+    count_arr = [...count_arr, i]
+}
+
 export default function (state = initialState, action) {
     switch (action.type) {
         case RECEIVED_DISTILLATION_DATA:
-            timestamp = new Date(Date.now()).toLocaleTimeString("en-US")
+            //timestamp = new Date(Date.now()).toLocaleTimeString("en-US")
+            timestamp = new Date().getTime()
             data = JSON.parse(action.payload)
 
             if (data.length === 4) {
@@ -63,14 +69,21 @@ export default function (state = initialState, action) {
         case CHART_GET_DATA:
             if (action.payload != 0) {
                 last = JSON.parse(action.payload[action.payload.length - 1].data)
+                let count = 0
+                let count1 = 0
+
                 return {
                     ...state,
-                    condenser: last[1],
-                    kettle: last[2],
+                    condenser: parseFloat(last[1].toFixed(2)),
+                    kettle: parseFloat(last[2].toFixed(2)),
                     heater: last[3],
                     pump: last[4],
-                    timeData: action.payload.map(u => new Date(JSON.parse(u.data)[0]).toLocaleTimeString("en-US")),
+                    //timeData: action.payload.map(u => new Date(JSON.parse(u.data)[0]).toLocaleTimeString("en-US")),
+                    timeData: action.payload.map(u => JSON.parse(u.data)[0]),
+                    //timeData: count_arr,
+                    //condenserData: action.payload.map(x => ({ x: count++, y: JSON.parse(x.data)[1] })),
                     condenserData: action.payload.map(u => JSON.parse(u.data)[1]),
+                    //kettleData: action.payload.map(x => ({ x: count1++, y: JSON.parse(x.data)[2] })),
                     kettleData: action.payload.map(u => JSON.parse(u.data)[2]),
                     heaterData: action.payload.map(u => JSON.parse(u.data)[3]),
                     pumpData: action.payload.map(u => JSON.parse(u.data)[4])

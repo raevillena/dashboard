@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from stores.models import Record, RecordData, SapSpecs, RecordBuffer
+from stores.models import Record, RecordData, DistillerRecord
 
 
 #Record Serializer
@@ -17,14 +17,7 @@ class RecordDataSerializer(serializers.ModelSerializer):
 
 
 #Record Serializer
-class SapSpecsSerializer(serializers.ModelSerializer):
+class DistillerRecordSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SapSpecs
-        fields = '__all__'
-
-
-#Record Serializer
-class RecordBufferSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RecordBuffer
+        model = DistillerRecord
         fields = '__all__'

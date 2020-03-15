@@ -1,5 +1,6 @@
 export const CONDENSER_TOPIC = "esp32/d150/ctemperature"
 export const PROGRESS_TOPIC = "dprogress"
+export const CONSOLE_TOPIC = "db/console"
 export const RELAY1TT = "esp32/d150/set/relay11"
 export const RELAY2TT = "esp32/d150/set/relay22"
 export const RELAY3TT = "esp32/d150/set/relay33"
@@ -12,3 +13,5 @@ export const RELAY3T = "esp32/d150/set/relay3"
 export const RELAY4T = "esp32/d150/set/relay4"
 export const RELAY5T = "esp32/d150/set/relay5"
 export const RELAY6T = "esp32/d150/set/relay6"
+
+//next plan: variable topics coming from database

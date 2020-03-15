@@ -11,6 +11,8 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import HistoryIcon from '@material-ui/icons/History';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import PortraitIcon from '@material-ui/icons/Portrait';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import DnsIcon from '@material-ui/icons/Dns';
 
 import { connect } from 'react-redux'
 import { logout } from '../../actions/auth'
@@ -28,6 +30,7 @@ export class Sidebar extends Component {
 
   renderLink = React.forwardRef((itemProps, ref) => <NavLink to="/" {...itemProps} ref={ref} />);
   renderLink2 = React.forwardRef((itemProps, ref) => <NavLink to="/records" {...itemProps} ref={ref} />);
+  renderLink5 = React.forwardRef((itemProps, ref) => <NavLink to="/distillers" {...itemProps} ref={ref} />);
   renderLink3 = React.forwardRef((itemProps, ref) => <NavLink to="/about" {...itemProps} ref={ref} />);
   renderLink4 = React.forwardRef((itemProps, ref) => <NavLink to="/contactus" {...itemProps} ref={ref} />);
   render() {
@@ -48,9 +51,15 @@ export class Sidebar extends Component {
           </ListItem>
           <ListItem button onClick={() => this.props.toggle(false)} component={this.renderLink2}>
             <ListItemIcon>
-              <HistoryIcon />
+              <DnsIcon />
             </ListItemIcon>
             <ListItemText primary="Records" />
+          </ListItem>
+          <ListItem button component={this.renderLink5} onClick={() => this.props.toggle(false)}>
+            <ListItemIcon>
+              <WhatshotIcon />
+            </ListItemIcon>
+            <ListItemText primary="Distillers" />
           </ListItem>
         </List>
         <Divider />

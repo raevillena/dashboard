@@ -48,6 +48,7 @@ export const RECEIVED_PROGRESS_DATA = "RECEIVED_PROGRESS_DATA"
 //sap specs types
 export const SAP_GET_DATA = "SAP_GET_DATA"
 export const SAP_CLEAR = "SAP_CLEAR"
+export const SAP_NEW = "SAP_NEW"
 
 
 //misc types
@@ -60,10 +61,15 @@ export const ONGOING_ADD = "ONGOING_ADD"
 export const ONGOING_DELETE = "ONGOING_DELETE"
 
 //relay types
-
 export const RELAY1 = "RELAY1"
 export const RELAY2 = "RELAY2"
 export const RELAY3 = "RELAY3"
 export const RELAY4 = "RELAY4"
 export const RELAY5 = "RELAY5"
 export const RELAY6 = "RELAY6"
+
+
+//distiller types
+export const DISTILLER_GET = "DISTILLER_GET"
+export const DISTILLER_NEW = "DISTILLER_NEW"
+export const DISTILLER_DELETE = "DISTILLER_DELETE"

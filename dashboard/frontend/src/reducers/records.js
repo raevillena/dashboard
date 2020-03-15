@@ -1,7 +1,6 @@
 import {
     RECORDS_NEW,
     RECORDS_GET,
-    RECORDS_UPDATE,
     RECORDS_START,
     RECORDS_END,
     RECORDS_DELETE,
@@ -9,12 +8,15 @@ import {
     PROGRESS_GET_DATA,
     PROGRESS_UPDATE_PROGRESS,
     PROGRESS_UPDATE_STATUS,
-    PROGRESS_UPDATE_VOLUME
-
+    PROGRESS_UPDATE_VOLUME,
+    DISTILLER_GET,
+    DISTILLER_DELETE,
+    DISTILLER_NEW
 } from '../actions/types.js'
 
 const initialState = {
-    records: [],
+    records: ['noRecord'],
+    distillers: ['noDistiller'],
     status: "",
     progress: 0,
     volume: 0
@@ -77,6 +79,21 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 volume: action.payload
+            }
+        case DISTILLER_GET:
+            return {
+                ...state,
+                distillers: action.payload
+            }
+        case DISTILLER_NEW:
+            return {
+                ...state,
+                distillers: [...state.distillers, action.payload]
+            }
+        case DISTILLER_DELETE:
+            return {
+                ...state,
+                distillers: state.distillers.filter(distiller => distiller.id !== action.payload)
             }
         default:
             return state;

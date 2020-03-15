@@ -17,6 +17,7 @@ export class ChartCondenser extends Component {
     }
     static propTypes = {
         timeData: PropTypes.array.isRequired,
+        ongoing: PropTypes.array.isRequired,
 
         condenser: PropTypes.number.isRequired,
         condenserData: PropTypes.array.isRequired,
@@ -27,7 +28,7 @@ export class ChartCondenser extends Component {
     };
 
     componentDidMount() {
-        this.props.getCondenserData(1)
+        this.props.getCondenserData(this.props.ongoing[0].recordID)
     }
     componentWillUnmount() {
         timeData = []
@@ -88,7 +89,9 @@ const mapStateToProps = state => ({
     condenser: state.payload.kettle,
 
     kettleData: state.payload.kettleData,
-    kettle: state.payload.kettle
+    kettle: state.payload.kettle,
+
+    ongoing: state.ongoing.records
 })
 
 export default connect(mapStateToProps, { getCondenserData })(ChartCondenser)

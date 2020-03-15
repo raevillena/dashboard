@@ -5,9 +5,9 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
-import RecordFormNewBatch from '../leads/RecordFormNewBatch';
-import IconButton from '@material-ui/core/IconButton';
+import DistillerFormNew from '../leads/DistillerFormNew';
 
+import IconButton from '@material-ui/core/IconButton';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { mdiPlusCircle } from '@mdi/js';
 
@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function ModalNewBatch(props) {
+function ModalNewDistiller(props) {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -69,8 +69,8 @@ function ModalNewBatch(props) {
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
-                        <h3>Batch Data</h3>
-                        <RecordFormNewBatch />
+                        <h3>Distiller Device</h3>
+                        <DistillerFormNew />
                         <Button onClick={handleClose} color="primary">
                             Cancel
                         </Button>
@@ -82,4 +82,4 @@ function ModalNewBatch(props) {
 }
 
 
-export default ModalNewBatch
+export default ModalNewDistiller
