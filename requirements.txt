@@ -1,10 +1,11 @@
-asgiref==3.2.3
-cffi==1.13.2
+-i https://pypi.org/simple/
+asgiref==3.2.5
+cffi==1.14.0
 cryptography==2.8
-Django==3.0.2
 django-rest-knox==4.1.0
+django==3.0.3
 djangorestframework==3.11.0
-pycparser==2.19
+pycparser==2.20
 pytz==2019.3
-six==1.13.0
-sqlparse==0.3.0
+six==1.14.0
+sqlparse==0.3.1
