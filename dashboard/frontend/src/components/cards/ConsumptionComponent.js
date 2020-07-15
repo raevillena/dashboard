@@ -5,7 +5,10 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { color1 } from '../constants/colors'
 import ConsumptionBarChart from '../leads/ConsumptionBarChart'
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import { mdiTimer } from '@mdi/js';
+import { mdiFlash } from '@mdi/js';
+
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 
 const theme = createMuiTheme({
@@ -63,16 +66,16 @@ export class ConsumptionComponent extends Component {
         return (
             <MuiThemeProvider theme={theme}>
                 <div>
-                    <Typography gutterBottom variant="h5" component="h2" color="secondary">
-                        <AccessTimeIcon />Elapsed Time
+                    <Typography gutterBottom component="h6" color="secondary">
+                        <SvgIcon><path d={mdiTimer} /></SvgIcon>Elapsed Time
                     </Typography>
                     <div className="row">
                         <div className="col-12">
                             <h1 className="text-center">{`${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
                         </div>
                     </div>
-                    <Typography gutterBottom variant="h5" component="h2" color="secondary">
-                        <FlashOnIcon />Total Energy Used
+                    <Typography gutterBottom component="h6" color="secondary">
+                        <SvgIcon><path d={mdiFlash} /></SvgIcon>Total Consumed Energy
                     </Typography>
                     <Typography align="center" variant="h3" color="primary">
                         234kWH

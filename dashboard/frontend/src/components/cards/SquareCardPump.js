@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { createMuiTheme, MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import WavesIcon from '@material-ui/icons/Waves';
-import { color1 } from '../constants/colors'
+import { color1, blackTextColor2 } from '../constants/colors'
 import { green } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid'
 
@@ -18,6 +18,9 @@ const theme = createMuiTheme({
     palette: {
         secondary: {
             main: color1,
+        },
+        textSecondary: {
+            main: blackTextColor2,
         },
     },
 });
@@ -92,8 +95,8 @@ export class SquareCardPump extends Component {
                     <Typography component="h6" color="secondary">
                         <SvgIcon color="secondary"><path d={mdiWaterPump} /></SvgIcon>Pump
                     </Typography>
-                    <Typography gutterBottom variant="h3" color="primary">
-                        {/*`${pump}°C`*/}Auto
+                    <Typography gutterBottom variant="h3" color="textSecondary">
+                        {(pump === 1 || pump === '1') ? "On" : "Off"}
                     </Typography>
                 </div>
             </MuiThemeProvider>
@@ -102,7 +105,7 @@ export class SquareCardPump extends Component {
 }
 
 SquareCardPump.propTypes = {
-    pump: PropTypes.number.isRequired,
+    pump: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 };
 
 const mapStateToProps = state => ({

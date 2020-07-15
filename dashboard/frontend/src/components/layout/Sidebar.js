@@ -14,9 +14,8 @@ import PortraitIcon from '@material-ui/icons/Portrait';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import DnsIcon from '@material-ui/icons/Dns';
 
-import { connect } from 'react-redux'
-import { logout } from '../../actions/auth'
-import { Link, NavLink } from 'react-router-dom'
+
+import { NavLink } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -30,7 +29,6 @@ export class Sidebar extends Component {
 
   renderLink = React.forwardRef((itemProps, ref) => <NavLink to="/" {...itemProps} ref={ref} />);
   renderLink2 = React.forwardRef((itemProps, ref) => <NavLink to="/records" {...itemProps} ref={ref} />);
-  renderLink5 = React.forwardRef((itemProps, ref) => <NavLink to="/distillers" {...itemProps} ref={ref} />);
   renderLink3 = React.forwardRef((itemProps, ref) => <NavLink to="/about" {...itemProps} ref={ref} />);
   renderLink4 = React.forwardRef((itemProps, ref) => <NavLink to="/contactus" {...itemProps} ref={ref} />);
   render() {
@@ -55,12 +53,6 @@ export class Sidebar extends Component {
             </ListItemIcon>
             <ListItemText primary="Records" />
           </ListItem>
-          <ListItem button component={this.renderLink5} onClick={() => this.props.toggle(false)}>
-            <ListItemIcon>
-              <WhatshotIcon />
-            </ListItemIcon>
-            <ListItemText primary="Distillers" />
-          </ListItem>
         </List>
         <Divider />
         <List component="nav">
@@ -84,9 +76,8 @@ export class Sidebar extends Component {
 
 Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired
 };
 
 
-export default connect(null, { logout })(withStyles(styles)(Sidebar));
+export default withStyles(styles)(Sidebar)
 

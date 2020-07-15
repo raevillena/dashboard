@@ -1,5 +1,5 @@
 import {
-    RELAY1, RELAY2, RELAY3, RELAY4, RELAY5, RELAY6
+    RELAY1, RELAY2, RELAY3, RELAY4, RELAY5, RELAY6, DUTYCYCLE
 } from '../actions/types.js'
 
 const initialState = {
@@ -8,7 +8,8 @@ const initialState = {
     relay3: false,
     relay4: false,
     relay5: false,
-    relay6: false
+    relay6: false,
+    dutycycle: 0
 }
 
 export default function (state = initialState, action) {
@@ -48,6 +49,11 @@ export default function (state = initialState, action) {
                 return { ...state, relay6: true }
             } else {
                 return { ...state, relay6: false }
+            }
+        case DUTYCYCLE:
+            return {
+                ...state,
+                dutycycle: parseInt(action.payload)
             }
         default:
             return state;

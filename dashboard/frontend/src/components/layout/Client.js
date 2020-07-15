@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import Proptypes from 'prop-types'
-import { updateData} from '../../actions/payload'
+import { updateData } from '../../actions/payload'
 import { createMessage } from '../../actions/messages'
 import { clientStatus, getOngoing } from '../../actions/functions'
 import {
@@ -14,18 +14,20 @@ import {
   RELAY3,
   RELAY4,
   RELAY5,
-  RELAY6
+  RELAY6,
+  DUTYCYCLE
 } from '../../actions/types'
 
 import {
   CONDENSER_TOPIC,
   PROGRESS_TOPIC,
-  RELAY1T,
-  RELAY2T,
-  RELAY3T,
-  RELAY4T,
-  RELAY5T,
-  RELAY6T
+  RELAY1_RX_TOPIC,
+  RELAY2_RX_TOPIC,
+  RELAY3_RX_TOPIC,
+  RELAY4_RX_TOPIC,
+  RELAY5_RX_TOPIC,
+  RELAY6_RX_TOPIC,
+  DC_RX_TOPIC
 
 } from '../constants/topics'
 
@@ -46,23 +48,26 @@ export class Client extends Component {
     else if (topic === PROGRESS_TOPIC) {
       this.props.updateData(RECEIVED_PROGRESS_DATA, parseFloat(message.toString()))
     }
-    else if (topic === RELAY1T) {
+    else if (topic === RELAY1_RX_TOPIC) {
       this.props.updateData(RELAY1, message.toString())
     }
-    else if (topic === RELAY2T) {
+    else if (topic === RELAY2_RX_TOPIC) {
       this.props.updateData(RELAY2, message.toString())
     }
-    else if (topic === RELAY3T) {
+    else if (topic === RELAY3_RX_TOPIC) {
       this.props.updateData(RELAY3, message.toString())
     }
-    else if (topic === RELAY4T) {
+    else if (topic === RELAY4_RX_TOPIC) {
       this.props.updateData(RELAY4, message.toString())
     }
-    else if (topic === RELAY5T) {
+    else if (topic === RELAY5_RX_TOPIC) {
       this.props.updateData(RELAY5, message.toString())
     }
-    else if (topic === RELAY6T) {
+    else if (topic === RELAY6_RX_TOPIC) {
       this.props.updateData(RELAY6, message.toString())
+    }
+    else if (topic === DC_RX_TOPIC) {
+      this.props.updateData(DUTYCYCLE, message.toString())
     }
   }
 
@@ -77,12 +82,13 @@ export class Client extends Component {
       this.props.clientStatus(CLIENT_CONNECT_SUCCESS, true)
       client.subscribe(CONDENSER_TOPIC)
       client.subscribe(PROGRESS_TOPIC)
-      client.subscribe(RELAY1T)
-      client.subscribe(RELAY2T)
-      client.subscribe(RELAY3T)
-      client.subscribe(RELAY4T)
-      client.subscribe(RELAY5T)
-      client.subscribe(RELAY6T)
+      client.subscribe(RELAY1_RX_TOPIC)
+      client.subscribe(RELAY2_RX_TOPIC)
+      client.subscribe(RELAY3_RX_TOPIC)
+      client.subscribe(RELAY4_RX_TOPIC)
+      client.subscribe(RELAY5_RX_TOPIC)
+      client.subscribe(RELAY6_RX_TOPIC)
+      client.subscribe(DC_RX_TOPIC)
     })
 
     client.on('reconnect', () => {

@@ -1,13 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Chart, Bar } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import "hammerjs";
-import * as zoomm from 'chartjs-plugin-zoom'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCondenserData } from "../../actions/functions";
-import Button from '@material-ui/core/Button';
-
 
 export class ConsumptionBarChart extends Component {
     static propTypes = {

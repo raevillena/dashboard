@@ -47,6 +47,11 @@ function Records(props) {
                 <Grid container spacing={2}>
                     <Grid item lg={12} md={12} sm={12} xs={12}>
                         <div style={{ paddingTop: 20 }}>
+                            <RecordsBarChart />
+                        </div>
+                    </Grid>
+                    <Grid item lg={12} md={12} sm={12} xs={12}>
+                        <div style={{ paddingTop: 20 }}>
                             <RecordsTable />
                         </div>
                     </Grid>
@@ -61,15 +66,3 @@ Records.propTypes = {
 };
 
 export default withStyles(styles)(Records);
-/*
-<Grid item lg={12} md={12} sm={12} xs={12}>
-    <div style={{ paddingTop: 10, paddingLeft: 20 }}>
-        <Typography component="h4" color="secondary">
-            <SvgIcon color="secondary"><path d={mdiPoll} /></SvgIcon>Ethanol Yield Overview
-        </Typography>
-    </div>
-</Grid>
-<Grid item lg={12} md={12} sm={12} xs={12}>
-    <RecordsBarChart />
-</Grid>
-*/

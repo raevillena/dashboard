@@ -9,7 +9,6 @@ import AlertTemplate from "react-alert-template-basic"
 import Header from './layout/Header';
 import Dashboard from './leads/Dashboard';
 import Records from './leads/Records';
-import Distillers from './leads/Distillers';
 import Alerts from './layout/Alerts';
 import Client from './layout/Client'
 
@@ -41,12 +40,11 @@ class App extends Component {
                             <Header />
                             <Client />
                             <Alerts />
-                            <div style={{ marginLeft: '3%', marginRight: '3%' }}>
+                            <div style={{ marginLeft: '3%', marginRight: '3%', height:'100%' }}>
                                 <Switch>
                                     <PrivateRoute exact path="/" component={Dashboard} />
                                     <PrivateRoute exact path="/records" component={Records} />
-                                    <PrivateRoute exact path="/distillers" component={Distillers} />
-                                    <Route exact path="/register" component={Register} />
+                                    <Route exact path="/@create-user" component={Register} />
                                     <Route exact path="/login" component={Login} />
                                 </Switch>
                             </div>

@@ -9,14 +9,11 @@ import {
     PROGRESS_UPDATE_PROGRESS,
     PROGRESS_UPDATE_STATUS,
     PROGRESS_UPDATE_VOLUME,
-    DISTILLER_GET,
-    DISTILLER_DELETE,
-    DISTILLER_NEW
+    LOGOUT_SUCCESS,
 } from '../actions/types.js'
 
 const initialState = {
     records: ['noRecord'],
-    distillers: ['noDistiller'],
     status: "",
     progress: 0,
     volume: 0
@@ -80,20 +77,13 @@ export default function (state = initialState, action) {
                 ...state,
                 volume: action.payload
             }
-        case DISTILLER_GET:
+        case LOGOUT_SUCCESS:
             return {
                 ...state,
-                distillers: action.payload
-            }
-        case DISTILLER_NEW:
-            return {
-                ...state,
-                distillers: [...state.distillers, action.payload]
-            }
-        case DISTILLER_DELETE:
-            return {
-                ...state,
-                distillers: state.distillers.filter(distiller => distiller.id !== action.payload)
+                records: ['noRecord'],
+                status: "",
+                progress: 0,
+                volume: 0
             }
         default:
             return state;

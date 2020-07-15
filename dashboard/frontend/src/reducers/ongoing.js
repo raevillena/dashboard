@@ -1,7 +1,8 @@
 import {
     ONGOING_GET,
     ONGOING_DELETE,
-    ONGOING_ADD
+    ONGOING_ADD,
+    LOGOUT_SUCCESS
 } from '../actions/types.js'
 
 const initialState = {
@@ -24,6 +25,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 records: state.records.filter(record => record.recordID !== action.payload)
+            }
+        case LOGOUT_SUCCESS:
+            return {
+                ...state,
+                records: ['noActive']
             }
         default:
             return state;

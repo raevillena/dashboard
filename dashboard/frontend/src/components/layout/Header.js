@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import { Link, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Proptypes from 'prop-types'
 import { logout } from '../../actions/auth'
@@ -13,7 +12,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -30,6 +28,9 @@ const theme = createMuiTheme({
   palette: {
     secondary: {
       main: appbarColor,
+    },
+    primary: {
+      main: grey[100],
     },
   },
 });
@@ -56,28 +57,27 @@ export class Header extends Component {
   }
 
   state = {
-    anchorEl: undefined,
+    anchorEl: null,
   }
   handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.setState({ anchorEl: event.currentTarget })
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: undefined });
+    this.setState({ anchorEl: null })
   };
 
   render() {
 
     const { isAuthenticated, user } = this.props.auth
     const { classes } = this.props
-
     const authLinks = (
       <div>
-        <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
-          <AccountCircleIcon fontSize="large" style={{ color: grey[50] }} />
+        <IconButton aria-controls="logout-menu" aria-haspopup="true" onClick={this.handleClick}>
+          <AccountCircleIcon fontSize="large" style={{ color: grey[100] }} />
         </IconButton>
         <Menu
-          id="simple-menu"
+          id="logout-menu"
           anchorEl={this.state.anchorEl}
           keepMounted
           open={Boolean(this.state.anchorEl)}
@@ -89,24 +89,8 @@ export class Header extends Component {
           <MenuItem onClick={this.props.logout}>Logout</MenuItem>
         </Menu>
       </div>
-      /*
-      <div className="dropdown">
-        <button className="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {user ? user.username : ''}
-        </button>
-        <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-          <button className="dropdown-item" type="button" onClick={this.props.logout}>Logout {user ? user.username : ''}</button>
-        </div>
-      </div> */
     )
-    const registerLink = React.forwardRef((props, ref) => <NavLink to="/register" {...props} ref={ref} />);
-    const loginLink = React.forwardRef((props, ref) => <NavLink to="/login" {...props} ref={ref} />);
-    const guestLinks = (
-      <div>
-        <Button color="inherit" component={loginLink}>Login</Button>
-        <Button color="inherit" component={registerLink}>Register</Button>
-      </div>
-    )
+
 
     return (
       <div>
@@ -117,13 +101,13 @@ export class Header extends Component {
                 <div className={classes.root}>
                   <AppBar position="static" color='secondary'>
                     <Toolbar>
-                      <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={() => isAuthenticated ? toggleLeftbar() : null}>
+                      <IconButton className={classes.menuButton} style={{ color: grey[100] }} aria-label="Menu" onClick={() => isAuthenticated ? toggleLeftbar() : null}>
                         <MenuIcon />
                       </IconButton>
-                      <Typography variant="h6" color="inherit" className={classes.flex}>
-                        MMSU e-Distiller Manager
+                      <Typography className={classes.flex} variant="h6" style={{ color: grey[100] }} >
+                        ZFFD Connect
                       </Typography>
-                      {isAuthenticated ? authLinks : guestLinks}
+                      {isAuthenticated ? authLinks : this.state.anchorEl = null}
                     </Toolbar>
                   </AppBar>
                 </div>

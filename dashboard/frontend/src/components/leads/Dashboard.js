@@ -3,11 +3,9 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getOngoing } from "../../actions/functions";
 import { Redirect } from 'react-router-dom'
-import AutoGrid from '../cards/AutoGrid';
 import DashboardGrid from '../cards/DashboardGrid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { createMessage } from '../../actions/messages'
-import { CREATE_MESSAGE } from '../../actions/types'
 
 export class Dashboard extends Component {
 

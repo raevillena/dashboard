@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { createMessage, returnErrors } from './messages'
 import { client } from '../components/layout/Client'
-import {CONSOLE_TOPIC} from '../components/constants/topics'
+import { CONSOLE_TOPIC } from '../components/constants/topics'
 
 import {
     RECORDS_GET,
@@ -14,10 +14,7 @@ import {
     RECORDS_ERROR,
     ONGOING_GET,
     ONGOING_ADD,
-    ONGOING_DELETE,
-    DISTILLER_GET,
-    DISTILLER_NEW,
-    DISTILLER_DELETE
+    ONGOING_DELETE
 } from './types'
 import { tokenConfig } from './auth'
 
@@ -44,7 +41,7 @@ export const setStart = (id, status) => (dispatch, getState) => {
                 type: RECORDS_ERROR
             })
         })
-    resetActiveRecords(CONSOLE_TOPIC, 'reset')
+    resetActiveRecords(CONSOLE_TOPIC, 'start')
 }
 
 //set start flag for a record
@@ -71,7 +68,7 @@ export const setEnd = (id, start, status) => (dispatch, getState) => {
                 type: RECORDS_ERROR
             })
         })
-    resetActiveRecords(CONSOLE_TOPIC, 'reset')
+    resetActiveRecords(CONSOLE_TOPIC, 'stop')
 }
 
 //get Records
@@ -100,18 +97,6 @@ export const getOngoing = () => (dispatch, getState) => {
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
-//get distillers list
-export const getDistillers = () => (dispatch, getState) => {
-    axios
-        .get('/api/distillers', tokenConfig(getState))
-        .then(res => {
-            dispatch({
-                type: DISTILLER_GET,
-                payload: res.data
-            });
-        })
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
-}
 
 //delete store
 export const deleteRecord = (id) => (dispatch, getState) => {
@@ -127,38 +112,10 @@ export const deleteRecord = (id) => (dispatch, getState) => {
         .catch(err => console.log(err))
 }
 
-//delete distiller
-export const deleteDistiller = (id) => (dispatch, getState) => {
-    axios
-        .delete(`/api/distillers/${id}/`, tokenConfig(getState))
-        .then(res => {
-            dispatch(createMessage({ deleteLead: 'Distiller Removed' }))
-            dispatch({
-                type: DISTILLER_DELETE,
-                payload: id
-            });
-        })
-        .catch(err => console.log(err))
-}
-
-//add Distiller
-export const addDistiller = (name, capacity, topic, description) => (dispatch, getState) => {
-    const body = JSON.stringify({ name, capacity, topic, description })
-    axios
-        .post('/api/distillers/', body, tokenConfig(getState))
-        .then(res => {
-            dispatch(createMessage({ addLead: 'Distiller Added' }))
-            dispatch({
-                type: DISTILLER_NEW,
-                payload: res.data
-            });
-        })
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
-}
 
 //add Record
-export const addRecord = (distillerID, topic, sap_brix, sap_volume, sap_origin, sap_fermentation, sap_date_collected) => (dispatch, getState) => {
-    const body = JSON.stringify({ distillerID, topic, sap_brix, sap_volume, sap_origin, sap_fermentation, sap_date_collected })
+export const addRecord = (topic, sap_brix, sap_volume, sap_origin, sap_fermentation, sap_date_collected) => (dispatch, getState) => {
+    const body = JSON.stringify({ topic, sap_brix, sap_volume, sap_origin, sap_fermentation, sap_date_collected })
     axios
         .post('/api/records/', body, tokenConfig(getState))
         .then(res => {
@@ -173,9 +130,10 @@ export const addRecord = (distillerID, topic, sap_brix, sap_volume, sap_origin, 
 
 
 //get condenser data from database
-export const getCondenserData = (id) => (dispatch, getState) => {
+export const getCondenserData = (id, size) => (dispatch, getState) => {
     axios
-        .get(`/api/recorddata/?batch=${id}`, tokenConfig(getState))
+        //.get(`/api/recorddata/?batch=${id}${size = 'all' ? '' : `&sampleSize=${size}`}`, tokenConfig(getState))
+        .get(`/api/recorddata/?batch=${id}&sampleSize=${size}`, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: CHART_GET_DATA,
@@ -185,9 +143,16 @@ export const getCondenserData = (id) => (dispatch, getState) => {
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
-
-
+//fn for client dispatches
 export const clientStatus = (type, data) => (dispatch) => {
+    dispatch({
+        type: type,
+        payload: data
+    });
+}
+
+//fn for settign change dispatch
+export const setSampleSize = (type, data) => (dispatch) => {
     dispatch({
         type: type,
         payload: data
@@ -201,3 +166,4 @@ function resetActiveRecords(topic, data) {
     const options = { qos: 1 }
     client.publish(topic, `${data}`, options)
 }
+

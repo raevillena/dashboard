@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { createMuiTheme, MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import WavesIcon from '@material-ui/icons/Waves';
-import { color1 } from '../constants/colors'
+import { color1, blackTextColor2 } from '../constants/colors'
 import { green } from '@material-ui/core/colors';
 
 import SvgIcon from '@material-ui/core/SvgIcon';
@@ -17,6 +17,9 @@ const theme = createMuiTheme({
     palette: {
         secondary: {
             main: color1,
+        },
+        textSecondary: {
+            main: blackTextColor2,
         },
     },
 });
@@ -91,8 +94,8 @@ export class SquareCardHeater extends Component {
                     <Typography gutterBottom component="h6" color="secondary">
                         <SvgIcon><path d={mdiRadiator} /></SvgIcon> Heater
                     </Typography>
-                    <Typography gutterBottom variant="h3" color="primary">
-                        {/*`${heater}°C`*/}Auto
+                    <Typography gutterBottom variant="h3" color="textSecondary">
+                        {`${heater * 100}%`}
                     </Typography>
                 </div>
             </MuiThemeProvider>
@@ -101,7 +104,7 @@ export class SquareCardHeater extends Component {
 }
 
 SquareCardHeater.propTypes = {
-    heater: PropTypes.number.isRequired,
+    heater: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 };
 
 const mapStateToProps = state => ({

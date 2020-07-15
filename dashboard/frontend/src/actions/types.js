@@ -24,6 +24,7 @@ export const USER_LOADING = "USER_LOADING"
 export const USER_LOADED = "USER_LOADED"
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 export const LOGIN_FAIL = "LOGIN_FAIL"
+export const LOGIN_LOADING = "LOGIN_LOADING"
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS"
 export const REGISTER_FAIL = "REGISTER_FAIL"
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS"
@@ -67,9 +68,7 @@ export const RELAY3 = "RELAY3"
 export const RELAY4 = "RELAY4"
 export const RELAY5 = "RELAY5"
 export const RELAY6 = "RELAY6"
+export const DUTYCYCLE = "DUTYCYCLE"
 
-
-//distiller types
-export const DISTILLER_GET = "DISTILLER_GET"
-export const DISTILLER_NEW = "DISTILLER_NEW"
-export const DISTILLER_DELETE = "DISTILLER_DELETE"
+//setting types
+export const SETTING_SAMPLESIZE_CHANGE = "SETTING_SAMPLESIZE_CHANGE"

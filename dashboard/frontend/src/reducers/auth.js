@@ -6,19 +6,25 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
-
+    REGISTER_FAIL,
+    LOGIN_LOADING
 } from '../actions/types'
 
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     isLoading: false,
-    user: null
+    user: null,
+    isLoggingIn: false
 }
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case LOGIN_LOADING:
+            return {
+                ...state,
+                isLoggingIn: true
+            }
         case USER_LOADING:
             return {
                 ...state,
@@ -29,7 +35,8 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload
+                user: action.payload,
+                isLoggingIn: false
             }
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
@@ -38,7 +45,8 @@ export default function (state = initialState, action) {
                 ...state,
                 ...action.payload,
                 isAuthenticated: true,
-                isLoading: false
+                isLoading: false,
+                isLoggingIn: false
             }
         case AUTH_ERROR:
         case LOGOUT_SUCCESS:
@@ -50,7 +58,8 @@ export default function (state = initialState, action) {
                 token: null,
                 user: null,
                 isAuthenticated: false,
-                isLoading: false
+                isLoading: false,
+                isLoggingIn: false
             }
         default:
             return state

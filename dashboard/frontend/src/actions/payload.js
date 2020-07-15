@@ -18,3 +18,14 @@ export const sendSwitches = (topic, data) => (dispatch) => {
     }
     client.publish(topic, `${data}`, options)
 }
+
+//update DC payload
+export const sendDC = (topic, data) => (dispatch) => {
+    const options = { retain: true, qos: 1 }
+    if (data) {
+
+    } else {
+        data = 0
+    }
+    client.publish(topic, `${data}`, options)
+}

@@ -50,7 +50,6 @@ export class SimpleCardTextInput extends Component {
     };
     handleSliderChange = (event, value) => {
         this.setState({ sliderValue });
-        console.log(value)
     };
 
     render() {

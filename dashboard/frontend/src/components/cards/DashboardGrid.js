@@ -4,22 +4,11 @@ import { createMuiTheme, MuiThemeProvider, withStyles } from '@material-ui/core/
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import BarChartIcon from '@material-ui/icons/BarChart'
 
 import SimpleCardClient from './SimpleCardClient'
-import SimpleCardOverview from './SimpleCardOverview'
-import ModalViewSap from './ModalViewSap'
-import SimpleCardProgressOverview from './SimpleCardProgressOverview'
 
 import ChartComponent from '../leads/ChartComponent'
-
-import SimpleCardGaugeHeater from './SimpleCardGaugeHeater'
-import GaugeMeterHeater from '../leads/GaugeMeterHeater'
-import GaugeMeterPump from '../leads/GaugeMeterPump'
-
 import { color1 } from '../constants/colors'
-
-import ModalSetTemp from './ModalSetTemp'
 
 import SquareCardCondenser from './SquareCardCondenser'
 import SquareCardKettle from './SquareCardKettle'
@@ -29,6 +18,7 @@ import SquareCardPump from './SquareCardPump'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 import SwitchesComponent from './SwitchesComponent';
+import PumpComponent from './PumpComponent';
 import ConsumptionComponent from './ConsumptionComponent'
 
 const theme = createMuiTheme({
@@ -127,18 +117,23 @@ function DashboardGrid(props) {
                     </Grid>
                     <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                         <Grid container spacing={3}>
-                            <Grid item xl={8} lg={8} md={8} sm={12} xs={12}>
+                            <Grid item xl={10} lg={10} md={10} sm={9} xs={12}>
                                 <Paper className={classes.paper}>
                                     <SwitchesComponent />
                                 </Paper>
                             </Grid>
-                            <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
+                            <Grid item xl={2} lg={2} md={2} sm={3} xs={12}>
                                 <Paper className={classes.paper}>
-                                    <ConsumptionComponent />
+                                    <PumpComponent />
                                 </Paper>
                             </Grid>
                         </Grid>
                     </Grid>
+                    {/*<Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                        <Paper className={classes.paper}>
+                            <ConsumptionComponent />
+                        </Paper>
+                    </Grid>*/}
                 </Grid>
             </div>
         </MuiThemeProvider>

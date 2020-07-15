@@ -41,7 +41,7 @@ export class SimpleCardClient extends Component {
 
             <MuiThemeProvider theme={theme}>
                 <div>
-                    <Typography gutterBottom variant="h5" component="h2" color="secondary">
+                    <Typography gutterBottom component="h6" color="secondary">
                         <PublicIcon />MQTT Client
                     </Typography>
                     <div className="row">
