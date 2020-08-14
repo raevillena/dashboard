@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from "react-redux";
 import PropTypes, { object } from "prop-types";
-import { addRecord } from "../../actions/functions";
+import { updateRecord } from "../../actions/functions";
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -48,49 +48,63 @@ const styles = {
 };
 
 
-export class RecordFormNewBatch extends Component {
+export class RecordFormUpdateBatch extends Component {
   state = {
-    sap_brix: "",
-    sap_volume: "",
-    sap_origin: "",
-    sap_fermentation: "",
-    sap_date_collected: "",
-    sap_remarks: "",
+    sap_brix: undefined,
+    sap_volume: undefined,
+    sap_origin: undefined,
+    sap_fermentation: undefined,
+    sap_date_collected: undefined,
+    sap_remarks: undefined,
+    output_volume: undefined,
   };
 
   static propTypes = {
-    addRecord: PropTypes.func.isRequired,
+    updateData: PropTypes.object.isRequired,
+    updateRecord: PropTypes.func.isRequired,
+    cancel: PropTypes.func
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   onSubmit = e => {
     e.preventDefault();
-    const { sap_brix, sap_volume, sap_origin, sap_fermentation, sap_date_collected, sap_remarks } = this.state
-    this.props.addRecord(CONDENSER_TOPIC, sap_brix, sap_volume, sap_origin, sap_fermentation, sap_date_collected, sap_remarks)
+    this.props.updateRecord(this.state, this.props.updateData.recordID)
     this.setState({
-      sap_brix: "",
-      sap_volume: "",
-      sap_origin: "",
-      sap_fermentation: "",
-      sap_date_collected: "",
-      sap_remarks: "",
+      sap_brix: undefined,
+      sap_volume: undefined,
+      sap_origin: undefined,
+      sap_fermentation: undefined,
+      sap_date_collected: undefined,
+      sap_remarks: undefined,
+      output_volume: undefined,
     });
   };
 
-
+  componentDidMount() {
+    this.setState({
+      sap_brix: this.props.updateData.sap_brix,
+      sap_volume: this.props.updateData.sap_volume,
+      sap_origin: this.props.updateData.sap_origin,
+      sap_fermentation: this.props.updateData.sap_fermentation,
+      sap_date_collected: this.props.updateData.sap_date_collected,
+      sap_remarks: this.props.updateData.sap_remarks,
+      output_volume: this.props.updateData.output_volume,
+    });
+  }
   render() {
+
     const {
       sap_brix,
       sap_volume,
       sap_origin,
       sap_fermentation,
       sap_date_collected,
-      sap_remarks
+      sap_remarks,
+      output_volume
     } = this.state;
 
     const { classes } = this.props;
-    const dis = this.props.distillers
     return (
       <form onSubmit={this.onSubmit} className={classes.root}>
         <div className={classes.root2} key="distillers-menu">
@@ -116,6 +130,18 @@ export class RecordFormNewBatch extends Component {
               name="sap_brix"
               onChange={this.onChange}
               value={sap_brix}
+            />
+          </FormControl>
+          <FormControl fullWidth variant="outlined">
+            <TextField
+              className={classes.margin}
+              label="Ethanol Output"
+              placeholder="Liter"
+              multiline
+              variant="outlined"
+              name="output_volume"
+              onChange={this.onChange}
+              value={output_volume}
             />
           </FormControl>
           <FormControl fullWidth variant="outlined">
@@ -169,7 +195,7 @@ export class RecordFormNewBatch extends Component {
         </div>
         <div className="form-group float-right">
           <Button type="button" variant="outlined" color="primary" type="submit">
-            Submit
+            Update
           </Button>
         </div>
       </form >
@@ -183,4 +209,4 @@ const mapStateToProps = state => ({
   distillers: state.records.distillers
 })
 
-export default connect(mapStateToProps, { addRecord })(withStyles(styles)(RecordFormNewBatch))
+export default connect(mapStateToProps, { updateRecord })(withStyles(styles)(RecordFormUpdateBatch))

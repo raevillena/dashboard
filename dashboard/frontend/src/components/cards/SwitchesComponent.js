@@ -46,6 +46,9 @@ const styles = theme => ({
   container: {
     maxHeight: 440,
   },
+  button:{
+    padding:theme.spacing(0.5)
+  }
 });
 
 export class SwitchesComponent extends Component {
@@ -63,13 +66,16 @@ export class SwitchesComponent extends Component {
     const { auto, single } = this.state
     return (
       <MuiThemeProvider theme={theme}>
-        <div className="d-flex justify-content-between" style={{ marginBottom: 15 }}>
-          <Typography gutterBottom component="h6" color="secondary"><SvgIcon><path d={mdiTune} /></SvgIcon>Switches</Typography>
+        <div className="d-flex justify-content-between" style={{ marginBottom: 10 }}>
+          <Typography gutterBottom component="h6" color="secondary"><SvgIcon><path d={mdiTune} /></SvgIcon>Heater Control</Typography>
           <div>
-            {'Auto '} <CustomSwitch checked={this.state.auto} onChange={this.handleChange('auto')} />
-            {!auto && single ? ' Single ' : null}
-            {!auto && !single ? ' Multiple ' : null}
-            {!auto ? <CustomSwitch checked={this.state.single} onChange={this.handleChange('single')} /> : null}
+            <div className="float-right" style={{padding:'3px'}}>
+              {!auto && single ? ' Single ' : null}{!auto && !single ? ' Multiple ' : null}
+              {!auto ? <CustomSwitch checked={this.state.single} onChange={this.handleChange('single')} /> : null}
+            </div>
+            <div className="float-right" style={{padding:'3px'}}>
+              {'  Auto '} <CustomSwitch checked={this.state.auto} onChange={this.handleChange('auto')} />
+            </div> 
           </div>
         </div>
         {auto ? <SwitchesSingle disable={true} /> : null}

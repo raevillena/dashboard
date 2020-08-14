@@ -3,6 +3,7 @@ import {
     RECORDS_GET,
     RECORDS_START,
     RECORDS_END,
+    RECORDS_UPDATE,
     RECORDS_DELETE,
     PROGRESS_CLEAR,
     PROGRESS_GET_DATA,
@@ -10,10 +11,14 @@ import {
     PROGRESS_UPDATE_STATUS,
     PROGRESS_UPDATE_VOLUME,
     LOGOUT_SUCCESS,
+    RECORDS_GET_DATA,
 } from '../actions/types.js'
 
 const initialState = {
     records: ['noRecord'],
+    condenserData: ['noRecord'],
+    kettleData: [],
+    timeData: [],
     status: "",
     progress: 0,
     volume: 0
@@ -47,6 +52,28 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 records: [...state.records]
+            }
+        case RECORDS_UPDATE:
+            Object.assign(state.records.find(({ recordID }) => recordID === action.payload.recordID), { ...action.payload })
+            return {
+                ...state,
+                records: [...state.records]
+            }
+        case RECORDS_GET_DATA:
+            if (action.payload != 0) {
+                return {
+                    ...state,
+                    timeData: action.payload.map(u => JSON.parse(u.data)[0]),
+                    condenserData: action.payload.map(u => JSON.parse(u.data)[1]),
+                    kettleData: action.payload.map(u => JSON.parse(u.data)[2]),
+                }
+            } else {
+                return {
+                    ...state,
+                    timeData: [],
+                    condenserData: [],
+                    kettleData: [],
+                }
             }
         case PROGRESS_CLEAR:
             return {

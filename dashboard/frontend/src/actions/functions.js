@@ -12,6 +12,8 @@ import {
     RECORDS_START,
     RECORDS_END,
     RECORDS_ERROR,
+    RECORDS_UPDATE,
+    RECORDS_GET_DATA,
     ONGOING_GET,
     ONGOING_ADD,
     ONGOING_DELETE
@@ -44,6 +46,26 @@ export const setStart = (id, status) => (dispatch, getState) => {
     resetActiveRecords(CONSOLE_TOPIC, 'start')
 }
 
+//edit/update a record
+export const updateRecord = (data, id) => (dispatch, getState) => {
+    console.log(data, id)
+    const body = JSON.stringify(data)
+    axios
+        .put(`/api/records/${id}/`, body, tokenConfig(getState))
+        .then(res => {
+            dispatch(createMessage({ addLead: 'Record Updated' }))
+            dispatch({
+                type: RECORDS_UPDATE,
+                payload: res.data
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch(returnErrors(err.response.data, err.response.status))
+            dispatch({
+                type: RECORDS_ERROR
+            })
+        })
+}
 //set start flag for a record
 export const setEnd = (id, start, status) => (dispatch, getState) => {
     const end = Date.now()
@@ -137,6 +159,20 @@ export const getCondenserData = (id, size) => (dispatch, getState) => {
         .then(res => {
             dispatch({
                 type: CHART_GET_DATA,
+                payload: res.data
+            });
+        })
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
+}
+
+
+//get condenser data from database
+export const getRecordData = (id) => (dispatch, getState) => {
+    axios
+        .get(`/api/recorddata/?batch=${id}&sampleSize=all`, tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: RECORDS_GET_DATA,
                 payload: res.data
             });
         })

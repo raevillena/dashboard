@@ -14,7 +14,8 @@ import PortraitIcon from '@material-ui/icons/Portrait';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import DnsIcon from '@material-ui/icons/Dns';
 
-import { Link } from 'react-router-dom'
+
+import { NavLink } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -22,16 +23,14 @@ const styles = theme => ({
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
-})
-
+});
 
 export class Sidebar extends Component {
 
-
-  renderLink = React.forwardRef((itemProps, ref) => <Link to="/" {...itemProps} ref={ref} />);
-  renderLink2 = React.forwardRef((itemProps, ref) => <Link to="/records" {...itemProps} ref={ref} />);
-  renderLink3 = React.forwardRef((itemProps, ref) => <Link to="/about" {...itemProps} ref={ref} />);
-  renderLink4 = React.forwardRef((itemProps, ref) => <Link to="/contactus" {...itemProps} ref={ref} />);
+  renderLink = React.forwardRef((itemProps, ref) => <NavLink to="/" {...itemProps} ref={ref} />);
+  renderLink2 = React.forwardRef((itemProps, ref) => <NavLink to="/records" {...itemProps} ref={ref} />);
+  renderLink3 = React.forwardRef((itemProps, ref) => <NavLink to="/about" {...itemProps} ref={ref} />);
+  renderLink4 = React.forwardRef((itemProps, ref) => <NavLink to="/contactus" {...itemProps} ref={ref} />);
   render() {
     const { classes } = this.props;
 
@@ -48,10 +47,9 @@ export class Sidebar extends Component {
             </ListItemIcon>
             <ListItemText primary="Monitor" />
           </ListItem>
-
           <ListItem button onClick={() => this.props.toggle(false)} component={this.renderLink2}>
             <ListItemIcon>
-            <DnsIcon />
+              <DnsIcon />
             </ListItemIcon>
             <ListItemText primary="Records" />
           </ListItem>

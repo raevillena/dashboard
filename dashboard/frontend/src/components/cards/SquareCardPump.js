@@ -93,7 +93,7 @@ export class SquareCardPump extends Component {
             <MuiThemeProvider theme={theme}>
                 <div>
                     <Typography component="h6" color="secondary">
-                        <SvgIcon color="secondary"><path d={mdiWaterPump} /></SvgIcon>Pump
+                        <SvgIcon color="secondary"><path d={mdiWaterPump} /></SvgIcon>Pump State
                     </Typography>
                     <Typography gutterBottom variant="h3" color="textSecondary">
                         {(pump === 1 || pump === '1') ? "On" : "Off"}

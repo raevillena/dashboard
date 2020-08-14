@@ -92,7 +92,7 @@ export class SquareCardHeater extends Component {
             <MuiThemeProvider theme={theme}>
                 <div>
                     <Typography gutterBottom component="h6" color="secondary">
-                        <SvgIcon><path d={mdiRadiator} /></SvgIcon> Heater
+                        <SvgIcon><path d={mdiRadiator} /></SvgIcon> Heater Power
                     </Typography>
                     <Typography gutterBottom variant="h3" color="textSecondary">
                         {`${heater * 100}%`}

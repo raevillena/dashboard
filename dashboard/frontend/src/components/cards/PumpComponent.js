@@ -54,7 +54,7 @@ export class PumpComponent extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className="d-flex justify-content-between" style={{ marginBottom: 15 }}>
-          <Typography gutterBottom component="h6" color="secondary"><SvgIcon><path d={mdiTune} /></SvgIcon>Pump</Typography>
+          <Typography gutterBottom component="h6" color="secondary"><SvgIcon><path d={mdiTune} /></SvgIcon>Pump Control</Typography>
         </div>
         <Pump /> 
       </MuiThemeProvider>

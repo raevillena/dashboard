@@ -4,14 +4,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 //function imports
-import { getCondenserData, setSampleSize } from "../../actions/functions";
+import { getRecordData } from "../../actions/functions";
 
 //elements imports
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import IconButton from '@material-ui/core/IconButton';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import { mdiGraphql } from '@mdi/js';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Tooltip from '@material-ui/core/Tooltip';
 
 //chart imports
 import { Chart, Line } from 'react-chartjs-2'
@@ -22,11 +25,8 @@ import * as zoomm from 'chartjs-plugin-zoom'
 import { ChartColor1, ChartColor2, color1 } from '../constants/colors'
 import { ChartSampleSize } from '../constants/integers'
 
-//samplesize imports
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
+//import moment to parse timestamps
+import moment from 'moment';
 
 import { createMuiTheme, MuiThemeProvider, withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
@@ -57,6 +57,11 @@ const styles = theme => ({
         textAlign: 'left',
         color: theme.palette.text.secondary,
     },
+    paper2: {
+        margin: theme.spacing(2),
+        height: '100%',
+        textAlign: 'left',
+    },
     bottompaper: {
         padding: theme.spacing(0.5),
         height: '100%',
@@ -69,70 +74,97 @@ const styles = theme => ({
 });
 
 
-var timeData = []
-var chartData = []
-var chartData2 = []
 let div
-export class ChartComponent extends Component {
+let renderCount = 0
+export class RecordsViewChartComponent extends Component {
 
     state = {
-        sampleSize: ChartSampleSize[0].value,
         enableZoom: false
     }
     static propTypes = {
         timeData: PropTypes.array.isRequired,
-        ongoing: PropTypes.array.isRequired,
         condenserData: PropTypes.array.isRequired,
         kettleData: PropTypes.array.isRequired,
-        getCondenserData: PropTypes.func.isRequired,
+        getRecordData: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
     };
     componentDidMount() {
-        this.props.getCondenserData(this.props.ongoing[0].recordID, this.state.sampleSize)
+        this.props.getRecordData(this.props.record.id)
         Chart.pluginService.register(zoomm)
     }
     componentWillUnmount() {
-        timeData = []
-        chartData = []
-        chartData2 = []
+        renderCount = 0
     }
     handleZoomReset = () => {
         this.lineReference.chartInstance.resetZoom(1000)
     }
+    handleDownloadData = (id, name, y, x1, x2) => {
+        var csv = 'Timestamp,Condenser Temp, Kettle Temp\n';
+        y.forEach((row, index) => {
+            csv += moment(row).format('Do MMM YY h:mm:ss A') + ',' + x1[index] + ',' + x2[index] + "\n"
+        });
+        const element = document.createElement("a");
+        const file = new Blob([csv], { type: 'data:text/csv;charset=utf-8' });
+        element.href = URL.createObjectURL(file);
+        element.download = `${id}-${name}.csv`;
+        document.body.appendChild(element);
+        element.click();
+    }
     handleZoomEnable = (name) => event => {
         this.setState({ [name]: event.target.checked })
+        renderCount++
     }
-    handleSizeChange = (event) => {
-        this.props.getCondenserData(this.props.ongoing[0].recordID, event.target.value)
-        this.props.setSampleSize(SETTING_SAMPLESIZE_CHANGE, event.target.value)
-        this.setState({ sampleSize: event.target.value })
-        this.lineReference.chartInstance.resetZoom(1000)
+    static getDerivedStateFromProps(nextProps) {
+        renderCount++
+        return { nextProps }
     }
-
     render() {
         const conData = this.props.condenserData
         const ketData = this.props.kettleData
         const timData = this.props.timeData
-        const { classes } = this.props;
-        if (conData && conData.constructor === Array && conData.length === 0 && ketData && ketData.ketstructor === Array && ketData.length === 0) {
+        const { classes, record } = this.props
+
+        if ((renderCount % 2) === 1) {
             return (
                 <Fragment>
-                    <div className="d-flex justify-content-center align-middle" style={{ paddingTop: '10px', margin: '0' }}>
+                    <div className="d-flex justify-content-center align-middle" style={{ paddingTop: '10px', marginBottom: '10px'  }}>
                         <CircularProgress />
                     </div>
                 </Fragment>
             )
+        } else if (conData && conData.constructor === Array && conData.length === 0) {
+            return (
+                <Fragment>
+                    <MuiThemeProvider theme={theme}>
+                        <div className={classes.root}>
+                            <Grid container>
+                                <Grid item xl={12} lg={12} md={12} sm={12} xs={12} className={classes.chart}>
+                                    <div className="d-flex justify-content-center align-middle">
+                                        <h2>No Record Data</h2>
+                                    </div>
+                                </Grid>
+                                <Grid item xl={12} lg={12} md={12} sm={12} xs={12} >
+                                    <Grid container direction="row" justify="flex-start" alignItems="center">
+                                        <Grid item>
+                                            <Button onClick={() => this.props.cancel('view')} color="primary">
+                                                Close
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </MuiThemeProvider>
+                </Fragment>
+            )
         } else {
-            timeData = timData
-            chartData = conData
-            chartData2 = ketData
 
             var data = {
-                labels: timeData,
+                labels: timData,
                 datasets: [
                     {
                         label: "Condenser",
-                        data: chartData,
+                        data: conData,
                         fill: false,
                         borderWidth: 1.5,
                         borderColor: ChartColor1,
@@ -142,7 +174,7 @@ export class ChartComponent extends Component {
                     },
                     {
                         label: "Kettle",
-                        data: chartData2,
+                        data: ketData,
                         fill: false,
                         borderWidth: 1.5,
                         borderColor: ChartColor2,
@@ -156,15 +188,14 @@ export class ChartComponent extends Component {
             var options = {
                 responsive: true,
                 maintainAspectRatio: false,
-                //animation: false,
-                animation: {
-                    duration: 0,
-                    easing: 'easeOutExpo'
-                },
                 tooltips: {
                     position: 'nearest',
                     mode: 'index',
                     intersect: false,
+                },
+                //animation: false,
+                animation: {
+                    easing: 'easeOutExpo'
                 },
                 scales: {
                     xAxes: [{
@@ -237,7 +268,7 @@ export class ChartComponent extends Component {
                 <Fragment>
                     <MuiThemeProvider theme={theme}>
                         <div className={classes.root}>
-                            <Grid container spacing={1}>
+                            <Grid container>
                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12} className={classes.chart}>
                                     <div style={{ height: 300 }}>
                                         <Typography gutterBottom component="h6" color="secondary">
@@ -247,30 +278,25 @@ export class ChartComponent extends Component {
                                     </div>
                                 </Grid>
                                 <Grid container item xl={12} lg={12} md={12} sm={12} xs={12}>
-                                    <Grid container justify="space-between">
+                                    <Grid container justify="space-between" alignItems="center">
                                         <Grid item>
                                             <Grid container direction="row" justify="flex-start" alignItems="center">
                                                 <Grid item className={classes.bottompaper}>
-                                                    Size:
-                                                </Grid>
-                                                <Grid item className={classes.bottompaper}>
-                                                    <FormControl>
-                                                        <Select
-                                                            labelId="sample-size"
-                                                            inputProps={{ 'aria-label': 'Without label' }}
-                                                            value={this.state.sampleSize}
-                                                            onChange={this.handleSizeChange}
-                                                        >
-                                                            {ChartSampleSize.map((element, index) =>
-                                                                <MenuItem key={index} value={element.value}>{element.name}</MenuItem>
-                                                            )}
-                                                        </Select>
-                                                    </FormControl>
+                                                    <Button onClick={() => this.props.cancel('view')} color="primary">
+                                                        Cancel
+                                                    </Button>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
                                         <Grid item>
                                             <Grid container direction="row" justify="flex-end" alignItems="center">
+                                                <Grid item className={classes.bottompaper}>
+                                                    <Tooltip title="Save Data CSV Format">
+                                                        <IconButton aria-label="New Batch" onClick={() => this.handleDownloadData(record.id, record.name, timData, conData, ketData)} size="medium">
+                                                            <SaveAltIcon />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </Grid>
                                                 <Grid item className={classes.bottompaper}>
                                                     Zoom:
                                                 </Grid>
@@ -294,13 +320,12 @@ export class ChartComponent extends Component {
 }
 
 const mapStateToProps = state => ({
-    timeData: state.payload.timeData,
-    condenserData: state.payload.condenserData,
-    kettleData: state.payload.kettleData,
-    ongoing: state.ongoing.records
+    timeData: state.records.timeData,
+    condenserData: state.records.condenserData,
+    kettleData: state.records.kettleData,
 })
 
-export default connect(mapStateToProps, { getCondenserData, setSampleSize })(withStyles(styles)(ChartComponent))
+export default connect(mapStateToProps, { getRecordData })(withStyles(styles)(RecordsViewChartComponent))
 
 
 /*

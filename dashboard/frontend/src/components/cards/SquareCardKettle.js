@@ -92,7 +92,7 @@ export class SquareCardKettle extends Component {
             <MuiThemeProvider theme={theme}>
                 <div>
                     <Typography gutterBottom component="h6" color="secondary">
-                        <SvgIcon><path d={mdiThermometerLines} /></SvgIcon>Kettle
+                        <SvgIcon><path d={mdiThermometerLines} /></SvgIcon>Kettle Temp
                     </Typography>
                     <Typography gutterBottom variant="h3" color="textSecondary">
                         {`${kettle}°C`}

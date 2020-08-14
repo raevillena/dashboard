@@ -18,7 +18,7 @@ import Container from '@material-ui/core/Container'
 
 //constants imports
 import { ChartColor1, ChartColor2, color1 } from '../constants/colors'
-import { GroupbyOptions } from '../constants/integers'
+import { GroupbyOptions3 } from '../constants/integers'
 import { maxBarThickness } from '../constants/settings'
 
 const theme = createMuiTheme({
@@ -53,14 +53,14 @@ const styles = theme => ({
     },
 });
 
-export class RecordsBarChart extends Component {
+export class RecordsOverview2 extends Component {
     static propTypes = {
         records: PropTypes.array.isRequired,
         classes: PropTypes.object.isRequired,
     };
 
     state = {
-        groupOption: GroupbyOptions[0].value,
+        groupOption: GroupbyOptions3[0].value,
     }
 
     handleGroupChange = (event) => {
@@ -72,30 +72,35 @@ export class RecordsBarChart extends Component {
         const { groupOption } = this.state
         let timeData = []
         let valuables = []
+        let axisLabel = ""
         switch (groupOption) {
-            case GroupbyOptions[0].value:
+            case GroupbyOptions3[0].value:
                 const today = filter(records, d => moment(d.created_at).isSame(moment(), 'day'));
+                axisLabel = "Day"
                 today.map(data => {
                     timeData = [...timeData, moment(data.created_at).format('MM-DD-YYYY')]
                     valuables = [...valuables, parseFloat(data.output_volume)]
                 })
                 break;
-            case GroupbyOptions[1].value:
+            case GroupbyOptions3[1].value:
                 const thisWeek = filter(records, d => moment(d.created_at).isSame(moment(), 'week'));
+                axisLabel = "Day"
                 thisWeek.map(data => {
                     timeData = [...timeData, moment(data.created_at).format('MM-DD-YYYY')]
                     valuables = [...valuables, parseFloat(data.output_volume)]
                 })
                 break;
-            case GroupbyOptions[2].value:
+            case GroupbyOptions3[2].value:
                 const thisMonth = filter(records, d => moment(d.created_at).isSame(moment(), 'month'));
+                axisLabel = "Day"
                 thisMonth.map(data => {
                     timeData = [...timeData, moment(data.created_at).format('MM-DD-YYYY')]
                     valuables = [...valuables, parseFloat(data.output_volume)]
                 })
                 break;
-            case GroupbyOptions[3].value:
+            case GroupbyOptions3[3].value:
                 const byMonth = groupBy(records, d => moment(d.created_at).month());
+                axisLabel = "Month"
                 Object.keys(byMonth).forEach(key => {
                     switch (key) {
                         case '0':
@@ -144,8 +149,9 @@ export class RecordsBarChart extends Component {
                     valuables = [...valuables, sum]
                 });
                 break;
-            case GroupbyOptions[4].value:
+            case GroupbyOptions3[4].value:
                 const byYear = groupBy(records, d => moment(d.created_at).year());
+                axisLabel = "Year"
                 timeData = Object.keys(byYear)
                 Object.values(byYear).forEach(value => {
                     let sum = 0
@@ -161,7 +167,7 @@ export class RecordsBarChart extends Component {
             labels: timeData,//['8 am', '9 am', '10 am', '11 am', '12 am', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm'],//[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             datasets: [
                 {
-                    label: "Liters",
+                    label: "Collected Ethanol",
                     data: valuables,//[200, 333, 212, 123, 132, 244, 234, 111, 222, 213],//[{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 5, y: 5 }],
                     fill: false,
                     borderWidth: 1.5,
@@ -189,9 +195,21 @@ export class RecordsBarChart extends Component {
                 intersect: false,
             },
             scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: axisLabel
+                    }
+                }],
                 yAxes: [{
                     ticks: {
                         min: 0
+                    },
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Liters'
                     }
                 }],
             },
@@ -213,7 +231,7 @@ export class RecordsBarChart extends Component {
                                         value={this.state.groupOption}
                                         onChange={this.handleGroupChange}
                                     >
-                                        {GroupbyOptions.map((element, index) =>
+                                        {GroupbyOptions3.map((element, index) =>
                                             <MenuItem key={index} value={element.value}>{element.name}</MenuItem>
                                         )}
                                     </Select>
@@ -236,4 +254,4 @@ const mapStateToProps = state => ({
     records: state.records.records,
 })
 
-export default connect(mapStateToProps, {})(withStyles(styles)(RecordsBarChart))
+export default connect(mapStateToProps, {})(withStyles(styles)(RecordsOverview2))

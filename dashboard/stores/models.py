@@ -15,6 +15,7 @@ class Record(models.Model):
     sap_origin = models.CharField(max_length=256, blank=True)
     sap_fermentation = models.CharField(max_length=10, blank=True)
     sap_date_collected = models.CharField(max_length=50, blank=True)
+    sap_remarks = models.CharField(max_length=100, blank=True)
     owner = models.ForeignKey(
         User, related_name="records", on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

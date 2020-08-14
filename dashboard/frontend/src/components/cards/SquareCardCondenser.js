@@ -92,7 +92,7 @@ export class SquareCardCondenser extends Component {
             <MuiThemeProvider theme={theme}>
                 <div>
                     <Typography gutterBottom component="h6" color="secondary">
-                        <SvgIcon><path d={mdiThermometerLines} /></SvgIcon>Condenser
+                        <SvgIcon><path d={mdiThermometerLines} /></SvgIcon>Condenser Temp
                     </Typography>
                     <Typography gutterBottom variant="h3" color="textSecondary">
                         {`${condenser}°C`}

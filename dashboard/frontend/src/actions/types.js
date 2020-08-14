@@ -6,6 +6,9 @@ export const RECORDS_NEW = "RECORDS_NEW"
 export const RECORDS_START = "RECORDS_START"
 export const RECORDS_END = "RECORDS_END"
 export const RECORDS_ERROR = "RECORDS_ERROR"
+export const RECORDS_GET_DATA = "RECORDS_GET_DATA"
+export const RECORDS_DOWNLOAD = "RECORDS_DOWNLOAD"
+
 
 //chart types
 export const CHART_GET_DATA = "CHART_GET_DATA"

@@ -94,7 +94,7 @@ export class Pump extends Component {
                                     <Grid item xl={6} lg={6} md={6} sm={6} xs={6}>
                                         <Grid container direction="column" justify="center" alignItems="flex-start" className={classes.bottompaper}>
                                             <Grid item>
-                                                {changed ? <CircularProgress size={25} style={{ color: grey[10] }} /> : 'Pump'}
+                                                {changed ? <CircularProgress size={25} style={{ color: grey[10] }} /> : 'Pump(On/Off)'}
                                             </Grid>
                                         </Grid>
                                     </Grid>

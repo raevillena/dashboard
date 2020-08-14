@@ -57,6 +57,7 @@ function DashboardGrid(props) {
             <div className={classes.root}>
                 <Grid container spacing={1}>
                     <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                        {/*
                         <Breadcrumbs aria-label="breadcrumb">
                             <Link color="inherit" href="/" onClick={handleClick}>
                                 Dashboard
@@ -66,6 +67,7 @@ function DashboardGrid(props) {
                             </Link>
                             <Typography color="textPrimary">Monitor</Typography>
                         </Breadcrumbs>
+                        */}
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
@@ -117,12 +119,12 @@ function DashboardGrid(props) {
                     </Grid>
                     <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                         <Grid container spacing={3}>
-                            <Grid item xl={10} lg={10} md={10} sm={9} xs={12}>
+                            <Grid item xl={10} lg={10} md={9} sm={9} xs={12}>
                                 <Paper className={classes.paper}>
                                     <SwitchesComponent />
                                 </Paper>
                             </Grid>
-                            <Grid item xl={2} lg={2} md={2} sm={3} xs={12}>
+                            <Grid item xl={2} lg={2} md={3} sm={3} xs={12}>
                                 <Paper className={classes.paper}>
                                     <PumpComponent />
                                 </Paper>

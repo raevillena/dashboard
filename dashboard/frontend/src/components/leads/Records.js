@@ -9,7 +9,9 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import SvgIcon from '@material-ui/core/SvgIcon';
 //components to render
-import RecordsBarChart from './RecordsBarChart'
+import RecordsOverview1 from './RecordsOverview1'
+import RecordsOverview2 from './RecordsOverview2'
+import RecordsOverview3 from './RecordsOverview3'
 import RecordsTable from './RecordsTable'
 import { mdiPoll } from '@mdi/js';
 import { color1 } from '../constants/colors'
@@ -45,15 +47,18 @@ function Records(props) {
         <MuiThemeProvider theme={theme}>
             <div className={classes.root}>
                 <Grid container spacing={2}>
-                    <Grid item lg={12} md={12} sm={12} xs={12}>
-                        <div style={{ paddingTop: 20 }}>
-                            <RecordsBarChart />
-                        </div>
+                    <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                        <Grid container>
+                            <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                                <div style={{ paddingTop: 20 }}>
+                                    <RecordsOverview3 />
+                                </div> 
+                            </Grid>
+                        </Grid>
+
                     </Grid>
-                    <Grid item lg={12} md={12} sm={12} xs={12}>
-                        <div style={{ paddingTop: 20 }}>
-                            <RecordsTable />
-                        </div>
+                    <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                        <RecordsTable />
                     </Grid>
                 </Grid>
             </div>
