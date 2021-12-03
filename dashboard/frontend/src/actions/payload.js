@@ -22,6 +22,7 @@ export const sendSwitches = (topic, data) => (dispatch) => {
 //update DC payload
 export const sendDC = (topic, data) => (dispatch) => {
     const options = { retain: true, qos: 1 }
+    console.log(topic, " : ", data)
     if (data) {
 
     } else {
