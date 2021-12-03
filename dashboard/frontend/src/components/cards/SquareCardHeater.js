@@ -95,7 +95,7 @@ export class SquareCardHeater extends Component {
                         <SvgIcon><path d={mdiRadiator} /></SvgIcon> Heater Power
                     </Typography>
                     <Typography gutterBottom variant="h3" color="textSecondary">
-                        {`${heater * 100}%`}
+                        {`${parseInt(heater * 100)}%`}
                     </Typography>
                 </div>
             </MuiThemeProvider>

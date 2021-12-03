@@ -13,6 +13,14 @@ import { createMuiTheme, MuiThemeProvider, withStyles } from '@material-ui/core/
 import { color1 } from '../constants/colors'
 import { CONDENSER_TOPIC } from '../constants/topics'
 
+//picker
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
@@ -66,6 +74,8 @@ export class RecordFormUpdateBatch extends Component {
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  onDateChange = e => this.setState({ sap_date_collected: e})
 
   onSubmit = e => {
     e.preventDefault();
@@ -125,7 +135,7 @@ export class RecordFormUpdateBatch extends Component {
               className={classes.margin}
               label="Brix"
               placeholder="#"
-              multiline
+              type="number"
               variant="outlined"
               name="sap_brix"
               onChange={this.onChange}
@@ -137,7 +147,7 @@ export class RecordFormUpdateBatch extends Component {
               className={classes.margin}
               label="Ethanol Output"
               placeholder="Liter"
-              multiline
+              type="number"
               variant="outlined"
               name="output_volume"
               onChange={this.onChange}
@@ -149,7 +159,7 @@ export class RecordFormUpdateBatch extends Component {
               className={classes.margin}
               label="Volume"
               placeholder="Liter"
-              multiline
+              type="number"
               variant="outlined"
               name="sap_volume"
               onChange={this.onChange}
@@ -173,7 +183,7 @@ export class RecordFormUpdateBatch extends Component {
               className={classes.margin}
               label="Duration of Fermentation"
               placeholder="Hrs"
-              multiline
+              type="number"
               variant="outlined"
               name="sap_fermentation"
               onChange={this.onChange}
@@ -181,16 +191,24 @@ export class RecordFormUpdateBatch extends Component {
             />
           </FormControl>
           <FormControl fullWidth variant="outlined">
-            <TextField
-              className={classes.margin}
-              label="Date Collected"
-              placeholder="mm/dd/yyyy"
-              multiline
-              variant="outlined"
-              name="sap_date_collected"
-              onChange={this.onChange}
-              value={sap_date_collected}
-            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  autoOk
+                  className={classes.margin}
+                  variant="inline"
+                  id="date-picker-dialog"
+                  inputVariant="outlined"
+                  label="Date Collected"
+                  format="MM/dd/yyyy"
+                  InputAdornmentProps={{ position: "start" }}
+                  value={sap_date_collected}
+                  name="sap_date_collected"
+                  onChange={this.onDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                />
+              </MuiPickersUtilsProvider>
           </FormControl>
         </div>
         <div className="form-group float-right">

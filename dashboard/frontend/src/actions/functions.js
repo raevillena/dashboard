@@ -136,8 +136,8 @@ export const deleteRecord = (id) => (dispatch, getState) => {
 
 
 //add Record
-export const addRecord = (topic, sap_brix, sap_volume, sap_origin, sap_fermentation, sap_date_collected) => (dispatch, getState) => {
-    const body = JSON.stringify({ topic, sap_brix, sap_volume, sap_origin, sap_fermentation, sap_date_collected })
+export const addRecord = (topic, sap_brix, sap_volume, sap_origin, sap_fermentation, sap_date_collected, sap_remarks) => (dispatch, getState) => {
+    const body = JSON.stringify({ topic, sap_brix, sap_volume, sap_origin, sap_fermentation, sap_date_collected, sap_remarks })
     axios
         .post('/api/records/', body, tokenConfig(getState))
         .then(res => {
