@@ -192,7 +192,7 @@ export class RecordsTable extends Component {
     }
 
     const rec = this.props.records
-    if (rec && rec.constructor === Array && rec.length === 0) {
+    if (rec && rec.constructor === Array && rec.length === 0 && !rec) {
       return (
         <Fragment>
           <div className="d-flex justify-content-center align-middle">
