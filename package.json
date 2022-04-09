@@ -39,7 +39,7 @@
     "hammerjs": "^2.0.8",
     "lodash-es": "^4.17.15",
     "material-table": "^1.57.2",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mqtt": "^3.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
